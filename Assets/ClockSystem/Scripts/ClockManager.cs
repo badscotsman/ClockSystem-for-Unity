@@ -29,6 +29,7 @@ namespace Clocks
         private DateTime _timeStart;
 
         private ITimeProvider _timeProvider;
+        private readonly WaitForSeconds _tickCycle = new WaitForSeconds(1f);
 
 
         private void Start()
@@ -42,7 +43,7 @@ namespace Clocks
         {
             if (_timeProvider != null)
             {
-                _timeProvider.ChangeTimeZone -= SetProviderTimeStart;
+                _timeProvider.OnChangeTimeZone -= SetProviderTimeStart;
             }            
         }
 
@@ -80,7 +81,7 @@ namespace Clocks
                     }
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return _tickCycle;
             }
         }
 
@@ -90,7 +91,7 @@ namespace Clocks
             if (gameObject.TryGetComponent<ITimeProvider>(out _timeProvider))
             {
                 _timeProvider.GetTime(SetProviderTimeStart);
-                _timeProvider.ChangeTimeZone += SetProviderTimeStart;
+                _timeProvider.OnChangeTimeZone += SetProviderTimeStart;
             }
             else
             {

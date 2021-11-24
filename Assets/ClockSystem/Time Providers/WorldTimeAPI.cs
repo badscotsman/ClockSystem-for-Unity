@@ -13,7 +13,7 @@ namespace WorldTimeAPIOrg
     /// </summary>
     public class WorldTimeAPI : MonoBehaviour, ITimeProvider
     {
-        public event Action<DateTime> ChangeTimeZone;
+        public event Action<DateTime> OnChangeTimeZone;
 
         public enum TimeZones
         {
@@ -324,7 +324,7 @@ namespace WorldTimeAPIOrg
 
                 void SetCurrentWorldTime(DateTime dateTimeCurrent)
                 {
-                    ChangeTimeZone?.Invoke(dateTimeCurrent);
+                    OnChangeTimeZone?.Invoke(dateTimeCurrent);
                 }
             }
         }
